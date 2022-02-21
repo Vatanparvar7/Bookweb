@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/book_detiles.css' %}">
+    <link rel="stylesheet" href="{% static 'icons/css/font-awesome.css' ">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+<body>
+  <a href="{% url "books:feed" %}" style="text-decoration: none; font-size: 1.8rem;color: blue;"><i class="bi bi-box-arrow-left" style="font-size: 2rem; color: blue;"></i>Exit</a>
+    <header>
+      
+        <div class="head-container">
+            <div class="autor">
+                <div class="autor-div">
+                <img src="{{book.author.image.url}}" alt="" >
+                <div class="text">
+                    <h4><a href="{% url "users:user_follow" book.author.id %}" style="text-decoration: none">{{ book.author.username }}</a></h4>
+                    <span>{{book.date | date:"H:i d M  "}}</span>
+                </div>
+                </div>
+              
+                <div class="stars">
+                    <a><i class="fa fa-star"></i></a>
+                    <a><i class="fa fa-star"></i></a>
+                    <a><i class="fa fa-star"></i></a>
+                    <a><i class="fa fa-star"></i></a>
+                    <a><i class="fa fa-star"></i></a>
+                </div>
+            </div><h1 style="font-size: 1.2em; text-align: center; color: #212529;">{{book.name}}</h1>
+            <div class="main-text">
+                <p>{{book.title}}</p>
+                <img  src="{{book.image.url}}" alt="" class="img-fluid rounded"
+                style="width: 100%; height:20em;">
+            </div>
+            
+             
+             <div class="comments">
+                {% for comment in commentss %}
+                <div class="comment-users" style="border-bottom: 2px solid #333;">
+                    <div class="users-autor">
+                     <img src="{{comment.user.image.url}}" alt="">
+                     <h4> <a href="{% url "users:user_follow" comment.user.id %}" style="text-decoration: none;">{{comment.user.username }}</a>  <div class="stars">
+                      <div class="stars">
+                        {% if comment.star == 1%}
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i class="fa fa-star"></i></a>
+                        <a><i class="fa fa-star"></i></a>
+                        <a><i class="fa fa-star"></i></a>
+                        <a><i class="fa fa-star"></i></a>
+                        {%endif%}
+                        {% if comment.star == 2%}
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i class="fa fa-star"></i></a>
+                        <a><i class="fa fa-star"></i></a>
+                        <a><i class="fa fa-star"></i></a>
+                        {%endif%}
+                        {% if comment.star == 3%}
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i class="fa fa-star"></i></a>
+                        <a><i class="fa fa-star"></i></a>
+                        {%endif%}
+                        {% if comment.star == 4%}
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i class="fa fa-star"></i></a>
+                        {%endif%}
+                        {% if comment.star == 5%}
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        <a><i style="color: yellow;" class="fa fa-star"></i></a>
+                        {%endif%}
+                        {% if request.user == comment.user %}
+                        <a href="{% url "books:commentedit" book.id comment.id %}">   <i class="bi bi-pen" style="position: relative;left: 20px;"></i></a>
+                        <a href="{% url "books:commentdelete" book.id comment.id %}">   <i class="bi bi-trash" style="position: relative;left: 20px;"></i></a>
+                        {% endif %}
+                    </div>
+                  </div></h4>
+                    
+                    </div>
+                    <div class="users-text">
+                      <p>{{ comment.comments}}</p>
+                     <div> <span>{{comment.time | date:"H:i d M  "}}</span></div>
+                    </div>
+                </div>{%  endfor %}
+             </div>
+
+             <form  method="POST">{% csrf_token %}
+               
+                <div style=" border: 3px solid green;" class="container">
+                  <div class="post">
+                    <div class="text">Thanks for rating us!</div>
+                    <div class="edit">EDIT</div>
+                  </div>
+                  {{ forms.num1.teg }}
+                  <div class="star-widget">
+                    {% for i in forms.num1 %}
+                    {{ i.tag }}
+                    <label for="{{ i.id_for_label}}" class="fas fa-star"></label>
+                    {% endfor%}
+                    {% for i in forms.num2 %}
+                    {{ i.tag }}
+                    <label for="{{ i.id_for_label}}" class="fas fa-star"></label>
+                    {% endfor%}
+                    {% for i in forms.num3 %}
+                    {{ i.tag }}
+                    <label for="{{ i.id_for_label}}" class="fas fa-star"></label>
+                    {% endfor%}
+                    {% for i in forms.num4 %}
+                    {{ i.tag }}
+                    <label for="{{ i.id_for_label}}" class="fas fa-star"></label>
+                    {% endfor%}
+                    {% for i in forms.num5 %}
+                    {{ i.tag }}
+                    <label for="{{ i.id_for_label}}" class="fas fa-star"></label>
+                    {% endfor%}
+                      
+                     
+                      <div class="textarea">
+                        {{ forms.comments }}
+                        
+                        <!-- <textarea placeholder="Describe your experience.."></textarea> -->
+                      </div>
+                      <div class="btn">
+                        <button type="submit">Post</button>
+                      </div>
+                  </div>
+                </div>
+              </form>
+        </div>
+        </div>
+
+    </header>
+</body>
+</html>

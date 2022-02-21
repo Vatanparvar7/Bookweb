@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Profile Cards | CodingLab</title>
+    <link rel="stylesheet" href="{% static 'css/following.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+   <style>
+    .fre{
+      font-size: 1.2rem;
+      position: relative;
+      top:1rem;
+      color: #ffffff;
+    }
+    .sa{
+      margin-bottom: 1rem;
+    }
+   </style>
+  </head>
+              <!-- Creating By CodingLab -->
+  <body><div class="fre"><h1>Followers</h1></div>
+    <div class="container">
+    {% if follows %}
+        {% for follow in follows %}
+      <div class="box sa">
+      <div class="image">
+          <img src="{{ follow.my_account.image.url}}">
+        </div>
+        <div class="name_job">{{ follow.my_account.username}}</div>
+        <div class="rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="far fa-star"></i>
+          <i class="far fa-star"></i>
+          <i class="far fa-star"></i>
+        </div>
+        <p> Lorem ipsum dolor sitamet, stphen hawkin so adipisicing elit. Ratione disuja doloremque reiciendi nemo.</p>
+        <div class="btns">
+            <button style="background-color: #8e44ad"><a href="{% url "users:follow" follow.my_account.id  %}" style="text-decoration: none; color: #fff">{% if follow.my_account.id in item %}Unfollow{% else %}Follow{% endif %}</a></button>
+          <button>{% if follow.my_account != request.user %}<a href="{% url "users:chat" follow.my_account.id %}" style="text-decoration: none; color: #ffffff">Message</a>{% else %} Message {% endif %}</button>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="box sa">
+        <div class="image">
+          <img src="img3.jpeg" alt="">
+        </div>
+        <div class="name_job">No User</div>
+          <div class="rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="far fa-star"></i>
+        </div>
+        <p> Lorem ipsum dolor sitamet, stphen hawkin so adipisicing elit. Ratione disuja doloremque reiciendi nemo.</p>
+        <div class="btns">
+          <button>Read More</button>
+          <button>Message </button>
+        </div>
+      </div>{% endif %}
+    </div>
+      </body>
+</html>

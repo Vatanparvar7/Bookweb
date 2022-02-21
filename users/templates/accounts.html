@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Userss</h1>
+{% for user in users %}
+    {% if user != request.user %}
+    <img src="{{ user.image.url }}" style="width: 50px;height: 50px; border-radius: 100%;display: inline-block">
+    <h1 style="display: inline-block"><a href="{% url "users:user_follow" user.id %}">{{ user.username }}</a> </h1>
+    <br>
+    {% endif %}
+{% endfor %}
+</body>
+</html>

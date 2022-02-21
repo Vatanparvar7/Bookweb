@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Users</h1>
+{% for user in users %}
+    {% if user != request.user %}
+        <img src="{{ user.image.url }}" style="display: inline-block; width: 50px; height: 50px; border-radius: 100%">
+        <a href="{% url "users:chat" user.id %}">{{ user.username }}</a><br><br>
+    {% endif %}
+{% endfor %}
+</body>
+</html>

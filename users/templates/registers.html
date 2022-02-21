@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- === Coding by CodingLab | www.codinglabweb.com === -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+         
+    <title>Registration Form</title>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="forms">
+
+            <!-- Registration Form -->
+            <div class="form signup">
+                <h2 class="title">Registration</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="input-field">
+                        {{ form.username}}
+                        <i class="uil uil-user"></i>
+                    </div>
+                    <div class="input-field">
+                        {{ form.last_name}}
+                        <i class="uil uil-user"></i>
+                    </div>
+                    <div class="input-field">
+                        {{ form.first_name}}
+                        <i class="uil uil-user"></i>
+                    </div>
+                    <div class="input-field">
+                        {{ form.email}}
+                        <i class="uil uil-envelope icon"></i>
+                    </div>
+                     <div class="input-field img-file"> 
+                      <p style="display: inline;">User image</p>
+                        {{ form.image }}
+                    </div>
+                    <div class="input-field">
+                        {{ form.password}}
+                        <i class="uil uil-lock icon"></i>
+                        <i class="uil uil-eye-slash showHidePw"></i>
+                    </div>
+
+
+                    <div class="input-field button">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+  
+
+</body>
+</html>

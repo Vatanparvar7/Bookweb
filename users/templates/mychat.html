@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chats</title>
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="header-container">
+            <div class="first">
+                <ul>
+                    <a href="{% url "users:friendchat" %}"><li><img src="{% static 'image/arrow.png' %}" alt=""></li></a>
+                    <li><img src="{{ friend.image.url }}" class="user" alt=""></li>
+                    <li>
+                        <h3>{{ friend.username }}</h3>
+                        <p>{{ friend.last_login | date:"H:i"}}</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="second">
+               <ul>
+                   <li><img src="{% static 'image/video.png' %}" alt=""></li>
+                   <li><img src="{% static 'image/phone.png' %}" alt=""></li>
+                   <li><img src="{% static 'image/more.png' %}" alt=""></li>
+               </ul> 
+            </div>
+        </div>
+        <div class="head-chat">
+            <div class="tg-chat">
+                {% for i in cos %}
+                {% if i.my_chat == request.user %}
+                <div class="my-tg-text">
+                  <img src="{{ i.my_chat.image.url}}" width="40px" height="40px" alt="">
+                  <p>{{ i.chat}}<span>{{ i.date | date:"H:i"}}</span> </p>
+                </div>
+                {% else %}
+                <div class="you-tg-text">
+                    <img src="{{ i.my_chat.image.url}}" width="40px" height="40px" alt="">
+                  <p>{{ i.chat}}<span>{{ i.date | date:"H:i"}}</span> </p>
+                </div>
+                {% endif %}
+            {% endfor %}
+
+             </div>
+        </div>
+        <div class="header-form">
+            <form method="post">
+                {% csrf_token %}
+                <img src="{% static 'image/emo.png' %}" alt="">
+                <div class="input-chat">
+                    {{form}}
+                </div>
+
+                <img src="{% static 'image/attach file.png' %}" alt="">
+                <img src="{% static 'image/camera.png'  %}" alt="">
+
+            <div class="img-form">
+                <button type="submit" style="background-color: white">
+                    <img src="{% static 'image/telegram_PNG13.png' %}" alt="">
+                </button>
+
+            </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

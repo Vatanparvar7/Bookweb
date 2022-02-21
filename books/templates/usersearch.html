@@ -1,0 +1,153 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- fontawesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <!-- main style -->
+    <link rel="stylesheet" href="{% static 'css/feed.css' %}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <link rel="stylesheet" href="{% static 'css/book_user_search.css' %}" />
+    <title>Flexbook</title>
+  </head>
+  <body class="bg-gray postion-relative">
+    <!-- ================= Appbar ================= -->
+    <div
+      class="bg-white d-flex align-items-center fixed-top shadow"
+      style="min-height: 56px; z-index: 5;margin-bottom: 10px;"
+    >
+    
+    <a href="{% url 'books:feed'%}"><i class="bi bi-box-arrow-left" style="font-size: 2rem; color: cornflowerblue;margin-left: 3px;"></i></a>
+    <form  class="box"  style="margin: auto;">
+      <input type="checkbox" id="check">
+      <div class="search-box">
+        <input type="text" placeholder="Search user..." name="q">
+        <label for="check" class="icon">
+          <i class="fas fa-search" style="padding-top: 1.1rem;"></i>
+        </label>
+      </div>
+    </from>
+      
+  </div>
+    
+    </div>
+    <!-- =============== New Chat Mobile =============== -->
+    
+    <!-- ================= Chat Modal Mobile ================= -->
+    <!-- chat 1 -->
+    
+
+    <!-- ================= Main ================= -->
+    <div class="container-fluid">
+      <div class="row justify-content-evenly">
+        <!-- ================= Sidebar ================= -->
+        <div class="col-12 col-lg-3">
+
+        </div>
+        <!-- ================= Timeline ================= -->
+        <div class="col-12 col-lg-6 pb-5">
+          <div
+            class="d-flex flex-column justify-content-center w-100 mx-auto"
+            style="padding-top: 56px; max-width: 680px"
+          >
+            <!-- stories -->
+
+            <!-- create post -->
+
+            <!-- create room -->
+
+            <!-- posts -->
+            <!-- p 1 -->
+
+            <!-- p 2 -->
+            {% for user in users %}
+            {% if q != '' and q != None %}
+            <div class="bg-white p-4 rounded shadow mt-3">
+              <!-- author -->
+              <div class="d-flex justify-content-between" style="border-radius: 50rem;">
+                <!-- avatar -->
+                <div class="d-flex">
+                  <img
+                    src="{{ user.image.url }}"
+                    alt="avatar"
+                    class="rounded-circle me-2"
+                    style="width: 43px; height: 43px; object-fit: cover"
+                  />
+                  <div>
+                    <p class="m-0 fw-bold"><a href="{% url "users:user_follow" user.id %}" style="text-decoration: none">{{ user.username }}</a> </p>
+                    
+                    <span class="text-muted fs-7">{{ user.last_login | date:"H:i" }}</span>
+                  </div>
+                </div>
+              </div></div>
+              {% else %}
+              <div class="bg-white p-4 rounded shadow mt-3">
+                <!-- author -->
+                <div class="d-flex justify-content-between" style="border-radius: 50rem;">
+                  <!-- avatar -->
+                  <div class="d-flex">
+                    <img
+                      src="{{ user.author.image.url }}"
+                      alt="avatar"
+                      class="rounded-circle me-2"
+                      style="width: 43px; height: 43px; object-fit: cover"
+                    />
+                    <div>
+                      <p class="m-0 fw-bold"><a href="{% url "users:user_follow" user.author.id %}" style="text-decoration: none">{{ user.author.username }}</a> </p>
+                      
+                      <span class="text-muted fs-7">{{ user.author.last_login | date:"H:i" }}</span>
+                    </div>
+                  </div>
+                </div>
+
+             
+              <!-- post content -->
+              
+            
+            
+              <!-- post content -->
+              
+            </div> {% endif %}
+              {% endfor %}
+          </div>
+        </div>
+        <!-- ================= Chatbar ================= -->
+        <div class="col-12 col-lg-3">
+
+      </div>
+    </div>
+
+    <!-- ================= Chat Icon ================= -->
+    <div
+      class="fixed-bottom right-100 p-3"
+      style="z-index: 6; left: initial"
+      type="button"
+      data-bs-toggle="modal"
+      data-bs-target="#newChat"
+    >
+
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="{% static 'javascript/feed.js' %}" />
+  </body>
+</html>

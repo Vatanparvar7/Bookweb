@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/commentedit.css'%}">
+    <link rel="stylesheet" href="icons/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+<body>
+    <header>
+        <div class="head-container">
+          <a href="{% url 'books:detail' book.id%}"><i class="bi bi-box-arrow-left" style="font-size: 2rem; color: blue;"></i></a>
+          <form  method="POST">{% csrf_token %}
+               
+            <div style=" border: 3px solid green;" class="container">
+              <div class="post">
+                <div class="text">Thanks for rating us!</div>
+                <div class="edit">EDIT</div>
+              </div>
+              {{ forms.num1.teg }}
+              <div class="star-widget">
+                {% for i in forms.num1 %}
+                {{ i.tag }}
+                <label for="{{ i.id_for_label}}" class="fas fa-star"></label>
+                {% endfor%}
+                {% for i in forms.num2 %}
+                {{ i.tag }}
+                <label for="{{ i.id_for_label}}" class="fas fa-star"></label>
+                {% endfor%}
+                {% for i in forms.num3 %}
+                {{ i.tag }}
+                <label for="{{ i.id_for_label}}" class="fas fa-star"></label>
+                {% endfor%}
+                {% for i in forms.num4 %}
+                {{ i.tag }}
+                <label for="{{ i.id_for_label}}" class="fas fa-star"></label>
+                {% endfor%}
+                {% for i in forms.num5 %}
+                {{ i.tag }}
+                <label for="{{ i.id_for_label}}" class="fas fa-star"></label>
+                {% endfor%}
+                  
+                 
+                  <div class="textarea">
+                    {{ forms.comments }}
+                    
+                    <textarea  placeholder="Describe your experience.." ></textarea>
+                  </div>
+                  <div class="btn">
+                    <button type="submit">Post</button>
+                  </div>
+              </div>
+            </div>
+          </form>
+        
+        </div>
+    </header>
+</body>
+</html>

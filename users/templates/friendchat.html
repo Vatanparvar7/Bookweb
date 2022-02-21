@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <link rel="stylesheet" href="{% static 'css/friendchat.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="head-text">
+                
+                <h3><a href="{% url 'books:feed'%}" style="text-decoration: none; font-size: 1.8rem;color: blanchedalmond;z-index: 22;"><i class="bi bi-box-arrow-left" style="font-size: 2rem; color: white;"></i>Exit</a> </h3>
+                <div class="box">
+    <input type="checkbox" id="check">
+    <div class="search-box">
+        <form method="get">
+      <input type="text" placeholder="Search user...." name="q"></form>
+      <label for="check" class="icon">
+        <i class="fas fa-search"></i>
+      </label>
+    </div>
+  </div>
+            </div>
+            <div class="head-chats">
+                <ul>
+                    {% for i in users %}
+                    {% if i.friend_chat != request.user %}
+                    <a href="{% url "users:chat" i.friend_chat.id %}" style="text-decoration: none"> <li>
+                        <div class="img">
+                              <img src="{{ i.friend_chat.image.url }}" alt="">
+                        </div>
+
+                        <div class="text">
+                         <h3>{{ i.friend_chat.username }}</h3>
+                         <p>Qanay jura yaxshimsan</p>
+                        </div>
+
+                        <div class="date">
+                            <p>{{ i.friend_chat.last_login | date:"H:i" }}</p>
+                        </div>
+                    </li></a>
+                        {% else %}
+                            <a href="{% url "users:chat" i.my_chat.id %}" style="text-decoration: none"> <li>
+                        <div class="img">
+                              <img src="{{ i.my_chat.image.url }}" alt="">
+                        </div>
+
+                        <div class="text">
+                         <h3>{{ i.my_chat.username }}</h3>
+                         <p>Qanay jura yaxshimsan</p>
+                        </div>
+
+                        <div class="date">
+                            <p>{{ i.my_chat.last_login | date:"H:i" }}</p>
+                        </div>
+                    </li></a>
+                        {% endif %}
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+    </header>
+</body>
+</html>

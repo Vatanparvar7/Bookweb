@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- === Coding by CodingLab | www.codinglabweb.com === -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="{% static 'css/book_create.css' %}">
+         
+    <title>Create Book</title>
+</head>
+<body>
+    
+    
+    <div class="container"><a href="{% url 'users:userprofile'%}"><i class="bi bi-box-arrow-left" style="font-size: 2rem; color: blue;"></i></a>
+        <div class="forms">
+
+            <!-- Registration Form -->
+            <div class="form signup">
+                <h2 class="title">Update Book</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="input-field">
+                       {{form.name}}
+                        <i class="uil uil-user"></i>
+                    </div>
+                    <div class="input-field">
+                        Book image
+                        {{form.image}}
+                      
+                    </div>
+                    <div class="input-field" style="margin-bottom: 20px;">
+                        Book file
+                        {{form.file}}
+                       
+                    </div>
+                    <div class="input-field-textarea">
+                       {{form.title}}
+                       
+                    </div>
+                    <div class="input-field button">
+                        <input type="submit" value="Create Book">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+  
+
+</body>
+</html>

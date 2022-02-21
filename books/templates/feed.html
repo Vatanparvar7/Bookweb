@@ -1,0 +1,577 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- fontawesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- bootstrap -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <!-- main style -->
+    <link rel="stylesheet" href="{% static '.css/feed.css' %}" />
+    <title>Flexbook</title>
+  </head>
+  <body class="bg-gray postion-relative">
+    <!-- ================= Appbar ================= -->
+    <div
+      class="bg-white d-flex align-items-center fixed-top shadow"
+      style="min-height: 56px; z-index: 5"
+    >
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <!-- search -->
+          <div class="col d-flex align-items-center">
+            <!-- logo -->
+            <i class="fab fa-facebook text-primary" style="font-size: 3rem"></i>
+            
+            <!-- search bar -->
+          <!-- <div class="input-group ms-2" type="link"> -->
+              <a href="{% url 'books:usersearch' %}" style="position: relative; left: 20%; text-decoration: none; "><i class="bi bi-search" style="font-size: 1.7rem; display: inline-block;"></i> User search </a>
+               <!--  <span
+                class="input-group-prepend d-lg-none"
+                id="searchMenu"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                data-bs-auto-close="outside"
+              >
+                <div
+                  class="input-group-text bg-gray border-0 rounded-circle"
+                  style="min-height: 40px"
+                >
+                  <i class="fas fa-search text-muted"></i>
+                </div>
+              </span>
+             
+              <span
+                class="input-group-prepend d-none d-lg-block"
+                id="searchMenu"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                data-bs-auto-close="outside"
+              >
+                <div
+                  class="input-group-text bg-gray border-0 rounded-pill"
+                  style="min-height: 40px; min-width: 230px"
+                >
+                  <a href="{% url 'books:booksearch' %}"><i class="fas fa-search me-2 text-muted"></i></a>
+                  <p class="m-0 fs-7 text-muted">Search User</p>
+                </div>
+              </span>
+              
+               -->
+            <!-- </div> -->
+          </div>
+          <!-- nav -->
+          <div class="col d-none d-xl-flex justify-content-center">
+            <!-- home -->
+            <div class="mx-4 nav__btn nav__btn-active">
+              <button type="button" class="btn px-4">
+                <i class="fas fa-home text-muted fs-4"></i>
+              </button>
+            </div>
+            <!-- market -->
+
+            <!-- group -->
+
+            <!-- gaming -->
+
+          </div>
+          <!-- menus -->
+          <div class="col d-flex align-items-center justify-content-end">
+            <!-- avatar -->
+            <div
+              class="align-items-center justify-content-center d-none d-xl-flex"
+            >
+              <img
+                src="{{ user.image.url }}"
+                class="rounded-circle me-2"
+                alt="avatar"
+                style="width: 38px; height: 38px; object-fit: cover"
+              />
+              <p class="m-0">{{ user.username }}</p>
+            </div>
+            <!-- main menu -->
+            
+            <!-- main menu dd -->
+
+            <!-- chat -->
+            
+            <!-- chat  dd -->
+<!--          -->
+            <!-- notifications -->
+          <span style="position: relative; left: 2.7rem; top:-0.8rem; font-size: 0.6rem; background-color: #C41706;border-radius: 100%;width: 0.9rem;height: 0.9rem;color:#fff;text-align: center">{{ sum }}</span>
+            <div
+              class="
+                rounded-circle
+                p-1
+                bg-gray
+                d-flex
+                align-items-center
+                justify-content-center
+                mx-2
+              "
+              style="width: 38px; height: 38px"
+              type="button"
+              id="notMenu"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              data-bs-auto-close="outside"
+            >
+              <i class="fas fa-bell">
+
+              </i>
+            </div>
+            <!-- notifications dd -->
+            <ul
+              class="dropdown-menu border-0 shadow p-3"
+              aria-labelledby="notMenu"
+              style="width: 23em; max-height: 600px; overflow-y: auto"
+            >
+              <!-- header -->
+              <li class="p-1">
+                <div class="d-flex justify-content-between">
+                  <h2>Notifications</h2>
+
+                </div>
+
+              </li>
+              <!-- news -->
+              <div class="d-flex justify-content-between mx-2">
+                <h5>New</h5>
+              </div>
+              <!-- news 1 -->
+                {% for i in new %}
+              <li class="my-2 p-1">
+                <a
+                  href="#"
+                  class="
+                    d-flex
+                    align-items-center
+                    justify-content-evenly
+                    text-decoration-none text-dark
+                  "
+                >
+                  <div class="d-flex align-items-center justify-content-evenly">
+                    <div class="p-2">
+                      <img
+                        src="{{ i.my_user.image.url}}"
+                        alt="avatar"
+                        class="rounded-circle"
+                        style="width: 58px; height: 58px; object-fit: cover"
+                      />
+                    </div>
+                    <div>
+                      <p class="fs-7 m-0">
+                        <a href="{% url 'users:user_follow' i.my_user.id %}" style="text-decoration: none;display: inline-block;color: blue;font-weight: 500; font-size: 1.5em;font-family: Verdana">
+                            {{ i.my_user.username }}</a>.Sizni do'stlari safiga qo'shdi.
+                          Siz ham uni do'stlariz orasiga qoshishni hohlaysizmi.
+                      </p>
+                      <span class="fs-7 text-primary">{{ i.date }}</span>
+                    </div>
+                  </div>
+
+                 <a href="#" style="display: inline-block;background-color: blue;width:4rem;height: 1.5rem; text-decoration: none; color: white;font-size: 0.7rem; text-align: center;">Following</a>
+                  <a href="#" style="display: inline-block;background-color: red;width:4rem;height: 1.5rem; text-decoration: none; color: white;font-size: 0.7rem; text-align: center;border-radius: 12%">Delete</a>
+                </a> </li>
+                {% endfor %}
+              <!-- news 2 -->
+
+              <!-- news 5 -->
+
+            </ul>
+            <!-- secondary menu -->
+            <div
+              class="
+                rounded-circle
+                p-1
+                bg-gray
+                d-flex
+                align-items-center
+                justify-content-center
+                mx-2
+              "
+              style="width: 38px; height: 38px"
+              type="button"
+              id="secondMenu"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              data-bs-auto-close="outside"
+            >
+              <i class="fas fa-caret-down"></i>
+            </div>
+            <!-- secondary menu dd -->
+            <ul
+              class="dropdown-menu border-0 shadow p-3"
+              aria-labelledby="secondMenu"
+              style="width: 23em"
+            >
+              <!-- avatar -->
+              <li class="dropdown-item p-1 rounded d-flex" type="button">
+                <img
+                  src="{{ user.image.url}}"
+                  alt="avatar"
+                  class="rounded-circle me-2"
+                  style="width: 45px; height: 45px; object-fit: cover"
+                />
+                <div>
+                  <p class="m-0">{{ user.username }}</p>
+                  <p class="m-0 text-muted"><a href="{% url "users:userprofile" %}" style="text-decoration: none">See your profile</a> </p>
+                </div>
+              </li>
+              <hr />
+              <!-- feedback -->
+              <li
+                class="dropdown-item p-1 rounded d-flex align-items-center"
+                type="button"
+              >
+
+                    <i class='fas fa-user-friends' style='font-size:1.5rem;color: #0C2DB4;'></i>
+                <div class="ms-3">
+                 <a href="{% url 'users:friendchat' %}" style="text-decoration: none"><p class="m-0">My Friend</p></a>
+                  <p class="m-0 text-muted fs-7">
+                    Write and read messages to your friends
+                  </p>
+                </div>
+              </li>
+
+              <hr />
+              <!-- feedback -->
+              <li
+                class="dropdown-item p-1 rounded d-flex align-items-center"
+                type="button"
+              >
+
+                    <i class='fas fa-book' style='font-size:1.5rem;color: #0C2DB4;'></i>
+                <div class="ms-3">
+                 <a href="{% url 'books:booksearch' %}" style="text-decoration: none"><p class="m-0">Book Search</p></a>
+                  <p class="m-0 text-muted fs-7">
+                    You may search more of  books here.
+                  </p>
+                </div>
+              </li>
+              
+              <hr />
+              <!-- options -->
+              <!-- 1 -->
+<!--              -->
+                <a href="{% url "users:logout" %}" style="text-decoration: none;"><p class="m-0" style="font-size: 1.5rem"><i class="bi bi-box-arrow-right" style="font-size: 1.5rem; color: #0C2DB4;"> </i> Logout</p></a>
+
+            </ul></div>
+                    </div>
+                    <!-- nested menu -->
+
+            <!-- end -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- =============== New Chat Mobile =============== -->
+    
+    <!-- ================= Chat Modal Mobile ================= -->
+    <!-- chat 1 -->
+    
+
+    <!-- ================= Main ================= -->
+    <div class="container-fluid">
+      <div class="row justify-content-evenly">
+        <!-- ================= Sidebar ================= -->
+        <div class="col-12 col-lg-3">
+
+        </div>
+        <!-- ================= Timeline ================= -->
+        <div class="col-12 col-lg-6 pb-5">
+          <div
+            class="d-flex flex-column justify-content-center w-100 mx-auto"
+            style="padding-top: 56px; max-width: 680px"
+          >
+            <!-- stories -->
+            <div class="mt-5 d-flex justify-content-between position-relative">
+              <!-- s 1 -->
+                {% for s in us %}
+              <div
+                class="mx-1 bg-white rounded story"
+                type="button"
+                style="width: 6em; height: 190px"
+              >
+                <img
+                  src="{{ s.image.url}}"
+                  class="card-img-top"
+                  alt="story posts"
+                  style="min-height: 125px; object-fit: cover"
+                />
+                <div
+                  class="
+                    d-flex
+                    align-items-center
+                    justify-content-center
+                    position-relative
+                  "
+                  style="min-height: 65px"
+                >
+                  <p class="mb-0 text-center fs-7 fw-bold"><a href="#" style="display: inline-block;width: 4rem; height: 1.5rem; background: blue;color: #E1DCDC;border-radius: 0.3rem" >Follow</a> </p>
+                  <div
+                    class="position-absolute top-0 start-50 translate-middle"
+                  >
+
+                  </div>
+                </div>
+              </div>
+                {% endfor %}
+              <!-- s 2 -->
+
+
+              <!-- s 3 -->
+
+              <!-- s 4 -->
+
+              <!-- s 5 -->
+
+              <!-- s 6 -->
+
+              <!-- next icon -->
+              <div
+                class="
+                  position-absolute
+                  top-50
+                  start-100
+                  translate-middle
+                  pointer
+                  d-none d-lg-block
+                "
+              >
+                <i
+                  class="
+                    fas
+                    fa-arrow-right
+                    p-3
+                    border
+                    text-muted
+                    bg-white
+                    rounded-circle
+                  "
+                ></i>
+              </div>
+            </div>
+            <!-- create post -->
+
+            <!-- create room -->
+
+            <!-- posts -->
+            <!-- p 1 -->
+             {% for book in page_obg.object_list %}
+            <div class="bg-white p-4 rounded shadow mt-3">
+              <!-- author -->
+              <div class="d-flex justify-content-between">
+                <!-- avatar -->
+                <div class="d-flex">
+                  <img
+                    src="{{ book.author.image.url }}"
+                    alt="avatar"
+                    class="rounded-circle me-2"
+                    style="width: 38px; height: 38px; object-fit: cover"
+                  />
+                  <div>
+                    <p class="m-0 fw-bold"><a href="{% url "users:user_follow" book.author.id %}" style="text-decoration: none">{{ book.author.username }}</a> </p>
+                    <span class="text-muted fs-7">{{ book.date }}</span>
+                  </div>
+                </div>
+                <!-- edit -->
+                {% if request.user == book.author %}<i
+                  class="fas fa-ellipsis-h"
+                  type="button"
+                  id="post1Menu"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                ></i>
+                  {% endif %}
+                <!-- edit menu -->
+                <ul
+                  class="dropdown-menu border-0 shadow"
+                  aria-labelledby="post1Menu"
+                >
+                  <li class="d-flex align-items-center">
+                    <a
+                      class="
+                        dropdown-item
+                        d-flex
+                        justify-content-around
+                        align-items-center
+                        fs-7
+                      "
+                      href="{% url 'books:bookedit' book.id %}"
+                    >
+                      Edit Book</a>
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <a
+                      class="
+                        dropdown-item
+                        d-flex
+                        justify-content-around
+                        align-items-center
+                        fs-7
+                      "
+                      href="{% url 'books:bookdelete' book.id %}"
+                    >
+                      Delete Book</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <!-- post content -->
+              <div class="mt-3">
+                <!-- content --><h1 style="font-size: 1.2em; text-align: center; color: #212529;">{{book.name}}</h1>
+                <div>
+                  <p>
+                   {{ book.title }}
+                  </p>
+                  <img
+                    src="{{ book.image.url }}"
+                    alt="post image"
+                    class="img-fluid rounded"
+                    style="width: 100%; height:20em;"
+                  />
+                </div>
+                <!-- likes & comments -->
+                <div class="post__comment mt-3 position-relative">
+                  <!-- likes -->
+
+                  <!-- comments start-->
+                  <div class="accordion" id="accordionExample">
+                    <div class="accordion-item border-0">
+                      <!-- comment collapse -->
+                      <h2 class="accordion-header" id="headingTwo">
+                        <div
+                          class="
+                            accordion-button
+                            collapsed
+                            pointer
+                            d-flex
+                            justify-content-end
+                          "
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapsePost1"
+                          aria-expanded="false"
+                          aria-controls="collapsePost1"
+                        >
+                          <p class="m-0"><a  download="{{ book.file}}" href="{{ book.file.url }}"><button type="button" class="btn btn-primary">Yuklash</button></a> </p>
+                        </div>
+                      </h2>
+                      
+                      <hr />
+                      <!-- comment & like bar -->
+                     <div class="d-flex justify-content-around">
+                         <!-- <a href="{% url "users:login" %}"> -->
+                         <div
+                          class="
+                            dropdown-item
+                            rounded
+                            d-flex
+                            justify-content-center
+                            align-items-center
+                            pointer
+                            text-muted
+                            p-1
+                          "
+                        >
+                            {% if request.user not in book.like.all %}
+
+                          <a href="{% url "books:like" book.id %}" style="text-decoration: none; color:#212529 "> <i style="width: 30px" class="bi bi-heart"></i><p class="m-0">  Like {{ book.like.count }}</p></a>
+                        {% else %}
+
+                                <a href="{% url "books:like" book.id %}" style="text-decoration: none; color:#212529 "><i style="color: red;width: 30px" class="bi bi-heart-fill"></i><p class="m-0">  Like {{ book.like.count }}</p></a>
+                            {% endif %}
+                        </div> 
+                      <!-- </a> -->
+                        <div
+                          class="
+                            dropdown-item
+                            rounded
+                            d-flex
+                            justify-content-center
+                            align-items-center
+                            pointer
+                            text-muted
+                            p-1
+                          "
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapsePost1"
+                          aria-expanded="false"
+                          aria-controls="collapsePost1"
+                        >
+                          <i class="fas fa-comment-alt me-3"></i>
+                          <a href="{% url "books:detail" book.id %}" style="font-weight: 400;color: #212529; text-decoration: none;"><p class="m-0">Comments</p></a>
+                        </div>
+                      </div>
+                      <!-- comment expand -->
+                      <div
+                        id="collapsePost1"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="headingTwo"
+                        data-bs-parent="#accordionExample"
+                      >
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- end -->
+                </div>
+              </div>
+            </div>
+              {% endfor %}
+            <!-- p 2 -->
+            <nav aria-label="Page navigation example" style="margin:auto;position: relative; top: 20px;">
+              <ul class="pagination">
+                  {% if page_obg.has_previous %}
+                <li class="page-item"><a class="page-link" href="{% url 'books:feed' %}?page={{ page_obg.previous_page_number }}">Previous</a></li>
+                {% endif%}
+                <li class="page-item"><a class="page-link" href="#">{{page_obg.number}}</a></li>
+               
+                {% if page_obg.has_next %}
+                <li class="page-item"><a class="page-link" href="{% url 'books:feed' %}?page={{ page_obg.next_page_number }}"">Next</a></li>
+                {% endif%}
+              </ul>
+            </nav>
+
+
+
+          </div>
+        </div>
+        <!-- ================= Chatbar ================= -->
+        <div class="col-12 col-lg-3"></div>
+      </div>
+    </div>
+
+    <!-- ================= Chat Icon ================= -->
+    <div
+      class="fixed-bottom right-100 p-3"
+      style="z-index: 6; left: initial"
+      type="button"
+      data-bs-toggle="modal"
+      data-bs-target="#newChat"
+    >
+
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+      crossorigin="anonymous"
+    ></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script src="{% static 'javascript/feed.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
+    <!-- main style -->
+    <link rel="stylesheet" href="{% static 'css/feed.css' %}" />
+    <title>Flexbook</title>
+  </head>
+  <body class="bg-gray">
+    <!-- Login -->
+    <div class="container mt-5 pt-5 d-flex flex-column flex-lg-row justify-content-evenly">
+      <!-- heading -->
+      <div class="text-center text-lg-start mt-0 pt-0 mt-lg-5 pt-lg-5">
+        <h1 class="text-primary fw-bold fs-0">MyBook</h1>
+        <p class="w-75 mx-auto fs-4 mx-lg-0">Flexbook helps you connect and share with the people in your life.</p>
+      </div>
+      <!-- form card -->
+      <div style="max-width: 28rem; width: 100%">
+        <!-- login form -->
+        <!-- first was form tag -->
+        <div class="bg-white shadow rounded p-3 input-group-lg form-control my-3">
+            <form method="post">
+          {% csrf_token %}
+                {{ form.username }}
+                {{ form.password }}
+
+          <button class="btn btn-primary w-100 my-3" type="submit">Log In</button>
+          <a href="#" class="text-decoration-none text-center"><p>Forgotten password?</p></a>
+            </form>
+          <!-- create form -->
+          <hr />
+          <div class="text-center my-4">
+            <button class="btn btn-success btn-lg" type="button" data-bs-toggle="modal" data-bs-target="#createModal">Create New Account</button>
+          </div>
+          <!-- create modal -->
+
+          <!-- modal end -->
+        </div>
+        <!-- tag -->
+        <div class="my-5 pb-5 text-center">
+          <p class="fw-bold"><a href="#" class="text-decoration-none text-dark">Createa a Page</a> <span class="fw-normal">for a celebrity, band or business.</span></p>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="{% static 'javascript/feed.jp' %}"></script>
+  </body>
+</html>

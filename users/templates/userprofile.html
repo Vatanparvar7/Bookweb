@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyProfile</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+    <a href="{% url 'books:feed'%}" style="text-decoration: none; font-size: 1.8rem;color: blanchedalmond;z-index: 22;"><i class="bi bi-box-arrow-left" style="font-size: 2rem; color: white;"></i>Exit</a>
+    <div class="wrapper">
+		
+		<div class="profile-card js-profile-card">
+			<div class="profile-card__img">
+				<img src="{{ userr.image.url }}" alt="profile">
+			</div>
+			<div class="profile-card__cnt js-profile-cnt">
+				<div class="profile-card__name">{{ userr.username}}</div>
+				<div class="profile-card__txt">{{ userr.first_name }}  <strong>{{ userr.last_name }}</strong></div>
+				<div class="profile-card-loc">
+					<span class="profile-card-loc__icon">
+					<img src="img/2.jpg" width="30px" height="30px">
+
+				</span>
+					<span class="profile-card-loc__txt">Samarqand,Uzbekistan</span>
+				</div>
+				<div class="profile-card-inf">
+					<div class="profile-card-inf__item">
+						<div class="profile-card-inf__title">{{ following }}</div>
+                        <div class="profile-card-inf__txt"><a href="{% url "users:followers" userr.id %}" style="text-decoration: none;color: #324e63">Followers</a></div>
+
+					</div>
+
+					<div class="profile-card-inf__item">
+						<div class="profile-card-inf__title">{{ follow }}</div>
+						<div class="profile-card-inf__txt"><a href="{% url "users:following" userr.id %}" style="text-decoration: none;color: #324e63">Following</a> </div>
+
+					</div>
+
+					<div class="profile-card-inf__item">
+						<div class="profile-card-inf__title">{{ sum }}</div>
+						<div class="profile-card-inf__txt">Books</div>
+
+					</div>
+
+
+
+				</div>
+
+				<div class="profile-card-social">
+					<a href="#" class="profile-card-social__item facebook">
+						<span class="icon-font">
+							<i class="fa fa-facebook icon"></i>
+						</span>
+					</a>
+
+					<a href="#" class="profile-card-social__item twitter">
+						<span class="icon-font">
+							<i class="fa fa-twitter icon"></i>
+						</span>
+					</a>
+
+					<a href="#" class="profile-card-social__item instagram">
+						<span class="icon-font">
+							<i class="fa fa-instagram icon"></i>
+						</span>
+					</a>
+
+					<a href="#" class="profile-card-social__item behance">
+						<span class="icon-font">
+							<i class="fa fa-google icon"></i>
+						</span>
+					</a>
+
+
+
+
+				</div>
+
+				<div class="profile-card-ctr">
+					<button class="profile-card__button button--blue js-message-btn"><a href="{% url "users:updateuser" userr.id %}" style="text-decoration: none; color: #fff"><i class="bi bi-pen-fill" style="font-size: 2rem; color: white;"></i>Edit Profile</a> </button>
+					<button class="profile-card__button button--orange"><a href="{% url "books:bookcreate" %}" style="text-decoration: none; color: #fff"><i class="bi bi-book-half" style="font-size: 2rem; color: white;"></i>  Create Book</a></button>
+				</div>
+			</div>
+			
+			
+		</div>
+
+	</div>
+
+    <div class="card-general">
+          <div class="container">
+              {% for book in books %}
+        <div class="box">
+			<p><a href="{% url 'books:bookedit' book.id %}">   <i class="bi bi-pen" style="position: relative;left: 100px; color: black; font-size: 1.5rem;"></i></a>
+            <a style="margin-left: 10px;" href="{% url 'books:deletemessage' book.id %}">   <i class="bi bi-trash" style="position: relative;left: 100px;color:black; font-size: 1.5rem;"></i></a></p>
+        <div class="image">
+            <img src="{{ book.image.url }}">
+          </div>
+          <div class="name_job" style="color: white;background-color: #212529">{{ book.name }}</div>
+
+          <p>{{ book.title }}Bu zor kitob ekan.KampyuterniBu zorKampyuterniBu zorKampyuterniBu zor  </p>
+          <div class="btns">
+            <a download="{{ book.file}}" href="{{ book.file.url }}"><button style="background-color: #8e44ad;">Download</button></a>
+            <a href="{% url "books:detail" book.id %}"><button style="background-color: #8e44ad;">Comments</button></a>
+          </div>
+        </div>{% endfor %}
+
+
+        </div>
+      </div>
+    </div>
+  
+</body>
+</html>
