@@ -8,6 +8,8 @@ django = "~=3.1.0"
 pillow = "*"
 django-auto-logout = "*"
 django-heroku = "*"
+geoip2 = "*"
+ipapi = "*"
 
 [dev-packages]
 

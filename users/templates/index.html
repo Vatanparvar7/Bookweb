@@ -30,13 +30,13 @@
                 {{ form.username }}
                 {{ form.password }}
 
-          <button class="btn btn-primary w-100 my-3" type="submit">Log In</button>
-          <a href="#" class="text-decoration-none text-center"><p>Forgotten password?</p></a>
+          <button class="btn btn-primary w-100 my-3" type="submit">Login</button>
+          <!-- <a href="#" class="text-decoration-none text-center"><p>Forgotten password?</p></a> -->
             </form>
           <!-- create form -->
           <hr />
           <div class="text-center my-4">
-            <button class="btn btn-success btn-lg" type="button" data-bs-toggle="modal" data-bs-target="#createModal">Create New Account</button>
+            <a href="{% url 'users:register'%}"><button class="btn btn-success btn-lg" type="button" data-bs-toggle="modal" data-bs-target="#createModal">Create New Account</button></a>
           </div>
           <!-- create modal -->
 

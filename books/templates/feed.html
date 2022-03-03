@@ -23,9 +23,12 @@
     />
     <!-- main style -->
     <link rel="stylesheet" href="{% static '.css/feed.css' %}" />
+    <link rel="stylesheet" href="{% static '.css/slider.css' %}" />
+    
     <title>Flexbook</title>
   </head>
   <body class="bg-gray postion-relative">
+    <script src="{% static 'javascript/slider.js' %}"></script>
     <!-- ================= Appbar ================= -->
     <div
       class="bg-white d-flex align-items-center fixed-top shadow"
@@ -184,8 +187,8 @@
                     </div>
                   </div>
 
-                 <a href="#" style="display: inline-block;background-color: blue;width:4rem;height: 1.5rem; text-decoration: none; color: white;font-size: 0.7rem; text-align: center;">Following</a>
-                  <a href="#" style="display: inline-block;background-color: red;width:4rem;height: 1.5rem; text-decoration: none; color: white;font-size: 0.7rem; text-align: center;border-radius: 12%">Delete</a>
+                 <!-- <a href="#" style="display: inline-block;background-color: blue;width:4rem;height: 1.5rem; text-decoration: none; color: white;font-size: 0.7rem; text-align: center;">Following</a>
+                  <a href="#" style="display: inline-block;background-color: red;width:4rem;height: 1.5rem; text-decoration: none; color: white;font-size: 0.7rem; text-align: center;border-radius: 12%">Delete</a> -->
                 </a> </li>
                 {% endfor %}
               <!-- news 2 -->
@@ -255,6 +258,22 @@
                 type="button"
               >
 
+                    <i class='fas fa-comment-alt me-3' style='font-size:1.5rem;color: #0C2DB4;'></i>
+                <div class="ms-3">
+                 <a href="{% url 'books:friendreview' %}" style="text-decoration: none"><p class="m-0">Friend's Review</p></a>
+                  <p class="m-0 text-muted fs-7">
+                    You will see your friend comment to book
+                  </p>
+                </div>
+              </li>
+              
+              <hr />
+              <!-- options -->
+              <li
+                class="dropdown-item p-1 rounded d-flex align-items-center"
+                type="button"
+              >
+
                     <i class='fas fa-book' style='font-size:1.5rem;color: #0C2DB4;'></i>
                 <div class="ms-3">
                  <a href="{% url 'books:booksearch' %}" style="text-decoration: none"><p class="m-0">Book Search</p></a>
@@ -265,7 +284,6 @@
               </li>
               
               <hr />
-              <!-- options -->
               <!-- 1 -->
 <!--              -->
                 <a href="{% url "users:logout" %}" style="text-decoration: none;"><p class="m-0" style="font-size: 1.5rem"><i class="bi bi-box-arrow-right" style="font-size: 1.5rem; color: #0C2DB4;"> </i> Logout</p></a>
@@ -299,71 +317,207 @@
             style="padding-top: 56px; max-width: 680px"
           >
             <!-- stories -->
-            <div class="mt-5 d-flex justify-content-between position-relative">
+            <div class="swiper mySwiper" style="width: 100%;">
+              <div class="swiper-wrapper mt-5 d-flex justify-content-between position-relative">
               <!-- s 1 -->
-                {% for s in us %}
               <div
-                class="mx-1 bg-white rounded story"
-                type="button"
-                style="width: 6em; height: 190px"
+              class="mx-1 bg-white rounded story swiper-slide"
+              type="button"
+              style="width: 6em; height: 190px"
+            >
+              <img
+                src="https://source.unsplash.com/collection/happy-people"
+                class="card-img-top"
+                alt="story posts"
+                style="height: 125px; object-fit: cover"
+              />
+              <div
+                class="
+                  d-flex
+                  align-items-center
+                  justify-content-center
+                  position-relative
+                "
+                style="min-height: 65px"
               >
-                <img
-                  src="{{ s.image.url}}"
-                  class="card-img-top"
-                  alt="story posts"
-                  style="min-height: 125px; object-fit: cover"
-                />
+                <p class="mb-0 text-center fs-7 fw-bold"><a href="#">Kuzatish</a> </p>
                 <div
-                  class="
-                    d-flex
-                    align-items-center
-                    justify-content-center
-                    position-relative
-                  "
-                  style="min-height: 65px"
+                  class="position-absolute top-0 start-50 translate-middle"
                 >
-                  <p class="mb-0 text-center fs-7 fw-bold"><a href="#" style="display: inline-block;width: 4rem; height: 1.5rem; background: blue;color: #E1DCDC;border-radius: 0.3rem" >Follow</a> </p>
-                  <div
-                    class="position-absolute top-0 start-50 translate-middle"
-                  >
-
-                  </div>
+                  <i
+                    class="
+                      fas
+                      fa-plus-circle
+                      fs-3
+                      text-primary
+                      bg-white
+                      p-1
+                      rounded-circle
+                    "
+                  ></i>
                 </div>
               </div>
-                {% endfor %}
+            </div>
               <!-- s 2 -->
 
-
+              <div
+              class="mx-1 bg-white rounded story swiper-slide"
+              type="button"
+              style="width: 6em; height: 190px"
+            >
+              <img
+                src="https://source.unsplash.com/collection/happy-people"
+                class="card-img-top"
+                alt="story posts"
+                style="height: 125px; object-fit: cover"
+              />
+              <div
+                class="
+                  d-flex
+                  align-items-center
+                  justify-content-center
+                  position-relative
+                "
+                style="min-height: 65px"
+              >
+                <p class="mb-0 text-center fs-7 fw-bold"><a href="#">Kuzatish</a> </p>
+                <div
+                  class="position-absolute top-0 start-50 translate-middle"
+                >
+                  <i
+                    class="
+                      fas
+                      fa-plus-circle
+                      fs-3
+                      text-primary
+                      bg-white
+                      p-1
+                      rounded-circle
+                    "
+                  ></i>
+                </div>
+              </div>
+            </div>
               <!-- s 3 -->
-
+              <div
+              class="mx-1 bg-white rounded story swiper-slide"
+              type="button"
+              style="width: 6em; height: 190px"
+            >
+              <img
+                src="https://source.unsplash.com/collection/happy-people"
+                class="card-img-top"
+                alt="story posts"
+                style="height: 125px; object-fit: cover"
+              />
+              <div
+                class="
+                  d-flex
+                  align-items-center
+                  justify-content-center
+                  position-relative
+                "
+                style="min-height: 65px"
+              >
+                <p class="mb-0 text-center fs-7 fw-bold"><a href="#">Kuzatish</a> </p>
+                <div
+                  class="position-absolute top-0 start-50 translate-middle"
+                >
+                  <i
+                    class="
+                      fas
+                      fa-plus-circle
+                      fs-3
+                      text-primary
+                      bg-white
+                      p-1
+                      rounded-circle
+                    "
+                  ></i>
+                </div>
+              </div>
+            </div>
               <!-- s 4 -->
-
+              <div
+              class="mx-1 bg-white rounded story swiper-slide"
+              type="button"
+              style="width: 6em; height: 190px"
+            >
+              <img
+                src="https://source.unsplash.com/collection/happy-people"
+                class="card-img-top"
+                alt="story posts"
+                style="height: 125px; object-fit: cover"
+              />
+              <div
+                class="
+                  d-flex
+                  align-items-center
+                  justify-content-center
+                  position-relative
+                "
+                style="min-height: 65px"
+              >
+                <p class="mb-0 text-center fs-7 fw-bold"><a href="#">Kuzatish</a> </p>
+                <div
+                  class="position-absolute top-0 start-50 translate-middle"
+                >
+                  <i
+                    class="
+                      fas
+                      fa-plus-circle
+                      fs-3
+                      text-primary
+                      bg-white
+                      p-1
+                      rounded-circle
+                    "
+                  ></i>
+                </div>
+              </div>
+            </div>
               <!-- s 5 -->
-
+              <div
+              class="mx-1 bg-white rounded story swiper-slide"
+              type="button"
+              style="width: 6em; height: 190px"
+            >
+              <img
+                src="https://source.unsplash.com/collection/happy-people"
+                class="card-img-top"
+                alt="story posts"
+                style="height: 125px; object-fit: cover"
+              />
+              <div
+                class="
+                  d-flex
+                  align-items-center
+                  justify-content-center
+                  position-relative
+                "
+                style="min-height: 65px"
+              >
+                <p class="mb-0 text-center fs-7 fw-bold"><a href="#">Kuzatish</a> </p>
+                <div
+                  class="position-absolute top-0 start-50 translate-middle"
+                >
+                  <i
+                    class="
+                      fas
+                      fa-plus-circle
+                      fs-3
+                      text-primary
+                      bg-white
+                      p-1
+                      rounded-circle
+                    "
+                  ></i>
+                </div>
+              </div>
+            </div>
               <!-- s 6 -->
 
               <!-- next icon -->
-              <div
-                class="
-                  position-absolute
-                  top-50
-                  start-100
-                  translate-middle
-                  pointer
-                  d-none d-lg-block
-                "
-              >
-                <i
-                  class="
-                    fas
-                    fa-arrow-right
-                    p-3
-                    border
-                    text-muted
-                    bg-white
-                    rounded-circle
-                  "
-                ></i>
               </div>
             </div>
             <!-- create post -->
@@ -372,6 +526,7 @@
 
             <!-- posts -->
             <!-- p 1 -->
+            {% if page_obg %}
              {% for book in page_obg.object_list %}
             <div class="bg-white p-4 rounded shadow mt-3">
               <!-- author -->
@@ -455,6 +610,7 @@
                     <div class="accordion-item border-0">
                       <!-- comment collapse -->
                       <h2 class="accordion-header" id="headingTwo">
+                        
                         <div
                           class="
                             accordion-button
@@ -469,7 +625,7 @@
                           aria-controls="collapsePost1"
                         >
                           <p class="m-0"><a  download="{{ book.file}}" href="{{ book.file.url }}"><button type="button" class="btn btn-primary">Yuklash</button></a> </p>
-                        </div>
+                        <p style="margin: auto;"><i class="bi bi-eye" style="font-size: 1.5rem; color: cornflowerblue;"></i>{{ book.sight.count }}</p></div>
                       </h2>
                       
                       <hr />
@@ -533,6 +689,9 @@
               </div>
             </div>
               {% endfor %}
+              {% else%}
+              <h1>No Book</h1>
+              {% endif %}
             <!-- p 2 -->
             <nav aria-label="Page navigation example" style="margin:auto;position: relative; top: 20px;">
               <ul class="pagination">
@@ -573,5 +732,6 @@
     ></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script src="{% static 'javascript/feed.js' %}"></script>
+    <script src="{% static 'javascript/slider.js' %}"></script>
   </body>
 </html>

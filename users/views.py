@@ -1,3 +1,4 @@
+
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
@@ -7,7 +8,12 @@ from .models import CustomUser,FriendModel,MessageFriendModel,ChatModel
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import UserRegisterFrom,ChatFormm,UserUpdateFrom
 from books.models import FeedModel
+
+
+
 # Create your views here.
+
+
 
 class RegisterUSer(View):
     def get(self,request):
@@ -34,7 +40,8 @@ class LogoutView(LoginRequiredMixin,View):
 class LoginUser(View):
     def get(self,request):
         form=AuthenticationForm()
-        return render(request,'index.html',{"form":form})
+
+        return render(request,'index.html',{"form":form,})
     def post(self,request):
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
@@ -46,11 +53,11 @@ class LoginUser(View):
 
 
 class UpdateUser(LoginRequiredMixin,View):
-    def get(self,request,id):
+    def get(self,request):
         
         form=UserUpdateFrom(instance=request.user)
         return render(request,'updateuser.html',{"form":form})
-    def post(self,request,id):
+    def post(self,request):
         form=UserUpdateFrom(instance=request.user,data=request.POST,files=request.FILES)
         if form.is_valid():
             form.save()
@@ -73,7 +80,7 @@ class UpdateUser(LoginRequiredMixin,View):
 
 
 
-class FriendChat(View):
+class FriendChat(LoginRequiredMixin,View):
     def get(self,request):
         sh=request.user
         new1 = ChatModel.objects.filter(my_chat=sh).all()
@@ -103,7 +110,7 @@ class FriendChat(View):
         return  render(request,'friendchat.html',{"users":cos})
 
 
-class FriendProfile(View):
+class FriendProfile(LoginRequiredMixin,View):
     def get(self,request,id):
         user = CustomUser.objects.get(id=id)
         friend=FriendModel.objects.filter(my_account=request.user, friend_account=user).exists()
@@ -113,7 +120,7 @@ class FriendProfile(View):
         followers=FriendModel.objects.filter(friend_account=user).count()
         return render(request,'friendprofile.html',{"userr":user,"friend":friend,"books":books,"follow":follow,"followers":followers,"sum":sa})
 
-class MyProfile(View):
+class MyProfile(LoginRequiredMixin,View):
     def get(self,request):
 
         sh=request.user
@@ -124,7 +131,7 @@ class MyProfile(View):
         return render(request,'userprofile.html',{'userr':sh,"books":book,'sum':sa,"following":folloing,"follow":follow})
 
 
-class Followers(View):
+class Followers(LoginRequiredMixin,View):
     def get(self,request,id):
         user = CustomUser.objects.get(id=id)
         follow = FriendModel.objects.filter(friend_account=user).all()
@@ -135,7 +142,7 @@ class Followers(View):
         return render(request,'followers.html.',{"follows":follow,'item':s})
 
 
-class Following(View):
+class Following(LoginRequiredMixin,View):
     def get(self,request,id):
         user = CustomUser.objects.get(id=id)
         follow = FriendModel.objects.filter(my_account=user).all()
@@ -146,7 +153,7 @@ class Following(View):
         return render(request,'following.html',{"follows":follow,'item':s})
 
 
-class Follow(View):
+class Follow(LoginRequiredMixin,View):
     def get(self,request,id):
         user=CustomUser.objects.get(id=id)
         friend=FriendModel.objects.filter(my_account=request.user, friend_account=user).exists()
@@ -165,13 +172,7 @@ class Follow(View):
                 chat.save()
             return redirect(reverse("users:user_follow",kwargs={"id": id}))
 
-
-class Account(View):
-    def get(self,request):
-        user=CustomUser.objects.all()
-        return render(request,'accounts.html',{"users":user})
-
-class ChatView(View):
+class ChatView(LoginRequiredMixin,View):
     def get(self,request,id):
         friend=CustomUser.objects.get(id=id)
         new1=ChatModel.objects.filter(my_chat=request.user,friend_chat=friend).all()
@@ -192,7 +193,6 @@ class ChatView(View):
         frined=CustomUser.objects.get(id=id)
         if form.is_valid():
             chat=request.POST.get('chat')
-            print(chat)
             sh=ChatModel(my_chat=request.user,friend_chat=frined,chat=chat)
             sh.save()
             return redirect(reverse('users:chat',kwargs={"id":id}))

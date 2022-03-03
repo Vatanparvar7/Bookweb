@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.validators import MinValueValidator,MaxValueValidator
 from users.models import CustomUser
 # Create your models here.
 
@@ -11,6 +11,7 @@ class FeedModel(models.Model):
     date=models.DateTimeField(auto_now_add=True)
     like=models.ManyToManyField(CustomUser,related_name="like",blank=True,)
     file=models.FileField(upload_to='bookfile/',null=False,blank=False,default='bookfile/sh.pdf')
+    sight=models.ManyToManyField(CustomUser,related_name="sight",blank=True,)
 
     def __str__(self):
         return self.name
@@ -19,7 +20,7 @@ class Comments(models.Model):
     user=models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     comments=models.CharField(max_length=300)
     time=models.DateTimeField(auto_now_add=True)
-    star=models.IntegerField()
+    star=models.IntegerField(default=1,validators=[MinValueValidator(1),MaxValueValidator(5)])
 
     def __str__(self):
         return self.book.name

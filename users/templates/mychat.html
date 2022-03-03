@@ -17,7 +17,7 @@
                     <li><img src="{{ friend.image.url }}" class="user" alt=""></li>
                     <li>
                         <h3>{{ friend.username }}</h3>
-                        <p>{{ friend.last_login | date:"H:i"}}</p>
+                        <p>{% if friend.last_seen %}{{ friend.last_seen|timesince }}{% else %}awhile{% endif %} ago</p>
                     </li>
                 </ul>
             </div>

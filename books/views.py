@@ -1,4 +1,4 @@
-from audioop import reverse
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
@@ -7,12 +7,10 @@ from .models import FeedModel,Comments
 from users.models import CustomUser,FriendModel
 from django.core.paginator import Paginator
 from users.models import MessageFriendModel
-from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
-from django.test import SimpleTestCase, override_settings
-from django.urls import path
+import ipapi
 
 # Create your views here.
+
 
 class FeedBookView(LoginRequiredMixin,View):
     def get(self,request):
@@ -59,33 +57,46 @@ class FeedBookView(LoginRequiredMixin,View):
         page=request.GET.get('page',1)
         pagination=Paginator(book,6)
         page_obg=pagination.get_page(page)
+        
+       
         return render(request,'feed.html',{"page_obg":page_obg,"new":new,"sum":n,"us":us,})
 
 class DetailView(LoginRequiredMixin,View):
     def get(self,request,id):
-        forms=ExampleForm(request.POST or None)
         book=FeedModel.objects.get(id=id)
+        sights=book.sight.all()
+        user=request.user
+        if user in sights:
+            print(user.username)
+        else:
+            book.sight.add(user)
+        forms=ExampleForm(request.POST or None)
         comments = Comments.objects.filter(book=book).order_by("-id")
         return render(request,'book_detile.html',{"book":book,"forms":forms,"commentss":comments})
     def post(self,request,id):
         forms=ExampleForm(request.POST or None)
         book=FeedModel.objects.get(id=id)
         if forms.is_valid():
-            num1=request.POST.get('num1')
-            num2=request.POST.get('num2')
-            num3=request.POST.get('num3')
-            num4=request.POST.get('num4')
-            num5=request.POST.get('num5')
+            num1=request.POST.get('num1' or '')
+            num2=request.POST.get('num2' or '')
+            num3=request.POST.get('num3' or '')
+            num4=request.POST.get('num4' or '')
+            num5=request.POST.get('num5' or '')
             comments=request.POST.get('comments')
-            num=[num5,num4,num3,num2,num1]
-            s=0
+            num=[num1,num2,num3,num4,num5]
+           
+            print(num)
+            
+            
+            s=5
             for i in range(0,len(num)):
-                if num[i]==None:
-                    s+=1
+                if num[i]=='' or num[i]==None :
+                    s-=1
                 else:
+                    
                     break
             
-            comment=Comments.objects.create(user=request.user,book=book,comments=comments,star=s+1)
+            comment=Comments.objects.create(user=request.user,book=book,comments=comments,star=s)
             comment.save()
             return redirect('/feed/{}'.format(id))
         else:
@@ -241,12 +252,17 @@ class BookReviewEdit(LoginRequiredMixin,View):
             num4=request.POST.get('num4')
             num5=request.POST.get('num5')
             comments=request.POST.get('comments')
-            num=[num5,num4,num3,num2,num1]
-            s=0
+            num=[num1,num2,num3,num4,num5]
+           
+            print(num)
+            
+            
+            s=5
             for i in range(0,len(num)):
-                if num[i]==None:
-                    s+=1
+                if num[i]=='' or num[i]==None :
+                    s-=1
                 else:
+                    
                     break
             
             # comment=Comments.objects.create(user=request.user,book=book,comments=comments,star=s+1)
@@ -254,7 +270,7 @@ class BookReviewEdit(LoginRequiredMixin,View):
             review.user=request.user
             review.book=book
             review.comments=comments
-            review.star=s+1
+            review.star=s
             review.save()
             return redirect('/feed/{}'.format(book_id))
         else:
@@ -301,5 +317,8 @@ class FriendReview(View):
 
 
 
-def exrorr(request, exception):
-    return render(request,'404.html',)
+def handle_not_found(request, exception):
+    return render(request,'notemplate.html',)
+
+def handle_server_found(request):
+    return render(request,'notemplate.html',)

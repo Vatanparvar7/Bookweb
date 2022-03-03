@@ -66,7 +66,7 @@ class ExampleForm(forms.Form):
         }))
 class ExampleForms(forms.ModelForm):
     CHOISES=[
-        (1,''),
+        (1,None),
     ]
     num1=forms.ChoiceField(required=False,choices=CHOISES,widget=forms.RadioSelect(attrs={
         # 'class':'num',
