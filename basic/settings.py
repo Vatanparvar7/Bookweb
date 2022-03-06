@@ -10,15 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from email.policy import default
+
 from pathlib import Path
 import os
-from environs import Env
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-env=Env()
-env.read_env()
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,11 +23,11 @@ env.read_env()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY=env.str("SECRET_KEY")
+SECRET_KEY='w=adl06@epb@!fkzgvotdzm&s7g7&kmazxhj=sste97@x(f9a#'
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = env.bool("DEBUG",default=False)
-
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = ['*']
 
 
@@ -46,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'books',
+    'notfound',
 ]
 
 MIDDLEWARE = [

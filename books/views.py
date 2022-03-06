@@ -2,21 +2,25 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import CommentForm,BookCreateForm,ExampleForm,ExampleForms
-from .models import FeedModel,Comments
+from .forms import CommentForm,BookCreateForm,ExampleForm
+from .models import FeedModel,Comments,LikeBook
 from users.models import CustomUser,FriendModel
 from django.core.paginator import Paginator
 from users.models import MessageFriendModel
-import ipapi
+
 
 # Create your views here.
 
 
 class FeedBookView(LoginRequiredMixin,View):
     def get(self,request):
-        us=CustomUser.objects.all()[:4]
+        #user follow message
         new=MessageFriendModel.objects.filter(friend_user=request.user).all().order_by("-id")
-        n=new.count()
+        suma=new.count()
+        
+        for i in new:
+            print(i.my_user)
+        #Book get
         friend=FriendModel.objects.filter(my_account=request.user).all()
         if friend:
             book=list()
@@ -57,10 +61,41 @@ class FeedBookView(LoginRequiredMixin,View):
         page=request.GET.get('page',1)
         pagination=Paginator(book,6)
         page_obg=pagination.get_page(page)
+
+        #user top
+        user=list(CustomUser.objects.all())
+        n=0
+        for i in range(len(user)):
+            if  FriendModel.objects.filter(my_account=request.user,friend_account=user[i-n]).exists() or request.user==user[i-n]:
+                user.pop(i-n)
+                
+                n+=1
+     
         
        
-        return render(request,'feed.html',{"page_obg":page_obg,"new":new,"sum":n,"us":us,})
+        return render(request,'feed.html',{"page_obg":page_obg,"new":new,"n":suma,"userfollow":user})
+class BookTop(LoginRequiredMixin,View):
+    def get(self,request):
+        book=list(FeedModel.objects.all())
+        for i in range(0,len(book)):
+            for j in range(i+1,len(book)):
+                if book[i].like.count() <= book[j].like.count():
+                    book[i],book[j]=book[j],book[i]
+                elif book[i].like.count() == book[j].like.count():
+                    if book[i].date <= book[j].date:
+                        book[i],book[j]=book[j],book[i]
 
+
+                    else:
+                        book[i]=book[i]
+                        book[j]=book[j]
+                else:
+                    book[i] = book[i]
+                    book[j] = book[j]
+        page=request.GET.get('page',1)
+        pagination=Paginator(book,6)
+        page_obg=pagination.get_page(page)
+        return render(request,'best_Book.html',{"page_obg":page_obg,})
 class DetailView(LoginRequiredMixin,View):
     def get(self,request,id):
         book=FeedModel.objects.get(id=id)
@@ -315,10 +350,37 @@ class FriendReview(View):
         page_obg=pagination.get_page(page)
         return render(request,'friendcommentview.html',{"page_obg":page_obg})
 
+class favouritebook(View):
+    def get(self,request,id):
+        book=FeedModel.objects.get(id=id)
+        
+
+        if not LikeBook.objects.filter(userlike=request.user,booklike=book).exists():
+            like=LikeBook.objects.create(
+                userlike=request.user,
+                booklike=book,
+            )
+            like.save()
+        return redirect("books:feed")
+class deletefavouritebook(View):
+    def get(self,request,id):
+        book=FeedModel.objects.get(id=id)
+        
+
+        if LikeBook.objects.filter(userlike=request.user,booklike=book).exists():
+            like=LikeBook.objects.get(userlike=request.user,booklike=book)
+            like.delete()
+        return redirect("books:bookfavourite")
+class FavouriteBook(View):
+    def get(self,request):
+        favouriteBook=LikeBook.objects.filter(userlike=request.user).all()
+        return render(request,'myfavouritebook.html',{"books":favouriteBook})
 
 
-def handle_not_found(request, exception):
-    return render(request,'notemplate.html',)
 
-def handle_server_found(request):
-    return render(request,'notemplate.html',)
+
+
+
+
+
+

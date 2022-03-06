@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My favourite books</title>
+    <link rel="stylesheet" href="{% static 'css/myfavouritebook.css' %}">
+    <link rel="stylesheet" href="icons/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+</head>
+<body>
+    
+    
+<h1 style="text-align: center;color: white; font-size: 2rem;">My Favourite Books</h1>
+    <div class="card-general">
+          <div class="container">
+        {%  if books %}
+        {% for book in books%}
+        <div class="box">
+          <p>
+            <a style="margin-left: 10px;" href="{% url 'books:deletelikebook' book.booklike.id %}">   <i class="bi bi-trash" style="position: relative;left: 100px;color:black; font-size: 1.5rem;"></i></a></p>
+        <div class="image">
+            <img src="{{book.booklike.image.url}}">
+          </div>
+          <div class="name_job">{{book.booklike.name}}</div>
+          <!-- <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+          </div> -->
+          
+          <p>{{book.booklike.title}} Lorem ipsum dolor sitamet, stphen hawkin so adipisicing elit. Ratione disuja doloremque reiciendi nemo. </p>
+          <div class="btns">
+          <a download="{{ book.booklike.file}}" href="{{ book.booklike.file.url }}"><button style="background-color: #8e44ad;">Dowlounds </button></a>
+          <a href="{% url "books:detail" book.booklike.id %}"><button style="background-color: #8e44ad;">Comments</button></a>
+          </div>
+        </div>
+        
+        {% endfor %}
+        {% else %}
+        <h1 style="text-align: center;color: white; font-size: 2rem;">You Favourite Books is no</h1>
+        {% endif %}
+        
+        </div>
+      </div>
+    </div>
+  
+</body>
+</html>

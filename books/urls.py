@@ -13,6 +13,10 @@ from .views import  (
                         CommentDeletes,
                         BookDeleteMessage,
                         FriendReview,
+                        BookTop,
+                        favouritebook,
+                        deletefavouritebook,
+                        FavouriteBook
         
 )
 
@@ -22,6 +26,8 @@ urlpatterns=[
     path('',FeedBookView.as_view(),name='feed'),# wrote test
     path('bookserach/',BookSearch.as_view(),name='booksearch'),# wrote test
     path('usersearch/',UserSearch.as_view(),name="usersearch"),# wrote test
+    path('bookTop/',BookTop.as_view(),name="Booktop"),
+    path('mybookfavourite/',FavouriteBook.as_view(),name="bookfavourite"),
     path('friendreviw/',FriendReview.as_view(),name="friendreview"),
     path('<int:id>/',DetailView.as_view(),name='detail'),# wrote test
     path('like/<int:id>/',LikeView.as_view(),name="like"),# wrote test
@@ -32,4 +38,7 @@ urlpatterns=[
     path('<int:book_id>/comments/<int:comment_id>/edit/',BookReviewEdit.as_view(),name='commentedit'), # wrote test
     path('<int:book_id>/view/<int:comment_id>',CommentDelete.as_view(),name='commentdelete'),# wrote test
     path('<int:book_id>/delete/<int:comment_id>deletes/',CommentDeletes.as_view(),name='commentdeletes'),# wrote test
+    path('favouritebook/<int:id>/',favouritebook.as_view(),name='favourite'),
+    path('favouritebook/<int:id>/delete',deletefavouritebook.as_view(),name='deletelikebook'),
+
 ]

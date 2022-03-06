@@ -197,3 +197,21 @@ class ChatView(LoginRequiredMixin,View):
             sh.save()
             return redirect(reverse('users:chat',kwargs={"id":id}))
 
+class FeedFollow(LoginRequiredMixin,View):
+    def get(self,request,id):
+        user=CustomUser.objects.get(id=id)
+        friend=FriendModel.objects.filter(my_account=request.user, friend_account=user).exists()
+        if friend:
+            chat=FriendModel.objects.get(my_account=request.user,friend_account=user)
+            chat.delete()
+            return redirect(reverse("books:feed"))
+        else:
+
+            soz = FriendModel.objects.create(my_account=request.user, friend_account=user)
+            soz.save()
+            got=MessageFriendModel.objects.filter(my_user=request.user, friend_user=user).exists()
+            sad = FriendModel.objects.filter(my_account=request.user, friend_account=user).exists()
+            if not got and sad:
+                chat = MessageFriendModel.objects.create(my_user=request.user, friend_user=user)
+                chat.save()
+            return redirect(reverse("books:feed"))

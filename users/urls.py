@@ -9,7 +9,8 @@ from .views import ( RegisterUSer,
                      MyProfile,
                      Followers,
                      Following,
-                     UpdateUser
+                     UpdateUser,
+                     FeedFollow
                      )
 
 
@@ -27,5 +28,6 @@ urlpatterns=[
     path('friendchat/<int:id>/chat/',ChatView.as_view(),name="chat",),#The test was written
     path('users/<int:id>/followers/',Followers.as_view(),name="followers",),#The test was written
     path('users/<int:id>/following/',Following.as_view(),name="following",),#The test was written
+    path('feedfollow/<int:id>/follow/',FeedFollow.as_view(),name="FeedFollow")#The test was written
 
 ]

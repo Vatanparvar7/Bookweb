@@ -22,8 +22,10 @@
       crossorigin="anonymous"
     />
     <!-- main style -->
-    <link rel="stylesheet" href="{% static '.css/feed.css' %}" />
-    <link rel="stylesheet" href="{% static '.css/slider.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/feed.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/slider.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/sliders.css' %}" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
     
     <title>Flexbook</title>
   </head>
@@ -116,7 +118,7 @@
             <!-- chat  dd -->
 <!--          -->
             <!-- notifications -->
-          <span style="position: relative; left: 2.7rem; top:-0.8rem; font-size: 0.6rem; background-color: #C41706;border-radius: 100%;width: 0.9rem;height: 0.9rem;color:#fff;text-align: center">{{ sum }}</span>
+          <span style="position: relative; left: 2.7rem; top:-0.8rem; font-size: 0.6rem; background-color: #C41706;border-radius: 100%;width: 0.9rem;height: 0.9rem;color:#fff;text-align: center">{{ n }}</span>
             <div
               class="
                 rounded-circle
@@ -252,6 +254,25 @@
               </li>
 
               <hr />
+              <li
+                class="dropdown-item p-1 rounded d-flex align-items-center"
+                type="button"
+              >
+
+                    <i class='bi bi-bookmark-check' style='font-size:1.5rem;color: #0C2DB4;'></i>
+                <div class="ms-3">
+                 <a href="{% url 'books:bookfavourite' %}" style="text-decoration: none"><p class="m-0">My Favourite books</p></a>
+                  <p class="m-0 text-muted fs-7">
+                    Thare are your favourite books in here
+                  </p>
+                </div>
+              </li>
+              
+              <hr />
+              <li
+                class="dropdown-item p-1 rounded d-flex align-items-center"
+                type="button"
+              >
               <!-- feedback -->
               <li
                 class="dropdown-item p-1 rounded d-flex align-items-center"
@@ -263,6 +284,26 @@
                  <a href="{% url 'books:friendreview' %}" style="text-decoration: none"><p class="m-0">Friend's Review</p></a>
                   <p class="m-0 text-muted fs-7">
                     You will see your friend comment to book
+                  </p>
+                </div>
+              </li>
+              
+              <hr />
+              <li
+                class="dropdown-item p-1 rounded d-flex align-items-center"
+                type="button"
+              >
+             
+            <li
+              class="dropdown-item p-1 rounded d-flex align-items-center"
+              type="button"
+            >
+              <!-- <i class="bi bi-book-fill"></i> -->
+                    <i class='bi bi-book-fill' style='font-size:1.5rem;color: #0C2DB4;'></i>
+                <div class="ms-3">
+                 <a href="{% url 'books:Booktop' %}" style="text-decoration: none"><p class="m-0">Best Books</p></a>
+                  <p class="m-0 text-muted fs-7">
+                    Tere are the best books in here
                   </p>
                 </div>
               </li>
@@ -320,13 +361,14 @@
             <div class="swiper mySwiper" style="width: 100%;">
               <div class="swiper-wrapper mt-5 d-flex justify-content-between position-relative">
               <!-- s 1 -->
+              {% for user in userfollow %}
               <div
               class="mx-1 bg-white rounded story swiper-slide"
               type="button"
               style="width: 6em; height: 190px"
             >
               <img
-                src="https://source.unsplash.com/collection/happy-people"
+                src="{{ user.image.url }}"
                 class="card-img-top"
                 alt="story posts"
                 style="height: 125px; object-fit: cover"
@@ -340,7 +382,7 @@
                 "
                 style="min-height: 65px"
               >
-                <p class="mb-0 text-center fs-7 fw-bold"><a href="#">Kuzatish</a> </p>
+                <p class="mb-0 text-center fs-7 fw-bold"><a style="text-decoration: none;" href="{% url 'users:FeedFollow' user.id %}">Follow</a> </p>
                 <div
                   class="position-absolute top-0 start-50 translate-middle"
                 >
@@ -358,164 +400,17 @@
                 </div>
               </div>
             </div>
+            {% endfor %}
               <!-- s 2 -->
 
-              <div
-              class="mx-1 bg-white rounded story swiper-slide"
-              type="button"
-              style="width: 6em; height: 190px"
-            >
-              <img
-                src="https://source.unsplash.com/collection/happy-people"
-                class="card-img-top"
-                alt="story posts"
-                style="height: 125px; object-fit: cover"
-              />
-              <div
-                class="
-                  d-flex
-                  align-items-center
-                  justify-content-center
-                  position-relative
-                "
-                style="min-height: 65px"
-              >
-                <p class="mb-0 text-center fs-7 fw-bold"><a href="#">Kuzatish</a> </p>
-                <div
-                  class="position-absolute top-0 start-50 translate-middle"
-                >
-                  <i
-                    class="
-                      fas
-                      fa-plus-circle
-                      fs-3
-                      text-primary
-                      bg-white
-                      p-1
-                      rounded-circle
-                    "
-                  ></i>
-                </div>
-              </div>
-            </div>
-              <!-- s 3 -->
-              <div
-              class="mx-1 bg-white rounded story swiper-slide"
-              type="button"
-              style="width: 6em; height: 190px"
-            >
-              <img
-                src="https://source.unsplash.com/collection/happy-people"
-                class="card-img-top"
-                alt="story posts"
-                style="height: 125px; object-fit: cover"
-              />
-              <div
-                class="
-                  d-flex
-                  align-items-center
-                  justify-content-center
-                  position-relative
-                "
-                style="min-height: 65px"
-              >
-                <p class="mb-0 text-center fs-7 fw-bold"><a href="#">Kuzatish</a> </p>
-                <div
-                  class="position-absolute top-0 start-50 translate-middle"
-                >
-                  <i
-                    class="
-                      fas
-                      fa-plus-circle
-                      fs-3
-                      text-primary
-                      bg-white
-                      p-1
-                      rounded-circle
-                    "
-                  ></i>
-                </div>
-              </div>
-            </div>
-              <!-- s 4 -->
-              <div
-              class="mx-1 bg-white rounded story swiper-slide"
-              type="button"
-              style="width: 6em; height: 190px"
-            >
-              <img
-                src="https://source.unsplash.com/collection/happy-people"
-                class="card-img-top"
-                alt="story posts"
-                style="height: 125px; object-fit: cover"
-              />
-              <div
-                class="
-                  d-flex
-                  align-items-center
-                  justify-content-center
-                  position-relative
-                "
-                style="min-height: 65px"
-              >
-                <p class="mb-0 text-center fs-7 fw-bold"><a href="#">Kuzatish</a> </p>
-                <div
-                  class="position-absolute top-0 start-50 translate-middle"
-                >
-                  <i
-                    class="
-                      fas
-                      fa-plus-circle
-                      fs-3
-                      text-primary
-                      bg-white
-                      p-1
-                      rounded-circle
-                    "
-                  ></i>
-                </div>
-              </div>
-            </div>
-              <!-- s 5 -->
-              <div
-              class="mx-1 bg-white rounded story swiper-slide"
-              type="button"
-              style="width: 6em; height: 190px"
-            >
-              <img
-                src="https://source.unsplash.com/collection/happy-people"
-                class="card-img-top"
-                alt="story posts"
-                style="height: 125px; object-fit: cover"
-              />
-              <div
-                class="
-                  d-flex
-                  align-items-center
-                  justify-content-center
-                  position-relative
-                "
-                style="min-height: 65px"
-              >
-                <p class="mb-0 text-center fs-7 fw-bold"><a href="#">Kuzatish</a> </p>
-                <div
-                  class="position-absolute top-0 start-50 translate-middle"
-                >
-                  <i
-                    class="
-                      fas
-                      fa-plus-circle
-                      fs-3
-                      text-primary
-                      bg-white
-                      p-1
-                      rounded-circle
-                    "
-                  ></i>
-                </div>
-              </div>
-            </div>
               <!-- s 6 -->
+             
+
+
+
+
+
+
 
               <!-- next icon -->
               </div>
@@ -552,6 +447,8 @@
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 ></i>
+                {%else%}
+                <a href="{% url 'books:favourite' book.id %}"><i class="bi bi-bookmark-heart" style="font-size: 2rem;" title="Save in My favourite book"></i></a>
                   {% endif %}
                 <!-- edit menu -->
                 <ul
@@ -725,6 +622,12 @@
     >
 
     </div>
+    
+    
+    
+    
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
@@ -733,5 +636,7 @@
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script src="{% static 'javascript/feed.js' %}"></script>
     <script src="{% static 'javascript/slider.js' %}"></script>
+    <script src="{% static 'javascript/sliders.js' %}"></script>
+    
   </body>
 </html>

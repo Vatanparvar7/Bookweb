@@ -26,5 +26,14 @@ class Comments(models.Model):
         return self.book.name
 
 
+class LikeBook(models.Model):
+    booklike=models.ForeignKey(FeedModel,related_name='booklike',on_delete=models.CASCADE)
+    userlike=models.ForeignKey(CustomUser,related_name='userlike',on_delete=models.CASCADE)
+    time=models.DateTimeField(auto_now_add=True)
+
+    def _str_(self):
+        return self.book.nmae
+
+
 
 
